@@ -1,0 +1,15 @@
+Sección 2
+imagen de modelo Dominio anémico UCO-BET
+
+Sección 6 
+Primera entrega Del trabajo
+Modelos de dominio anémico y enriquecidos
+muestreo de datos
+Draw.io
+
+Sección 7
+Event storming
+
+Nueva Versión Victus 
+vas a encontrar una nueva versión de nuestra solución mas organiza y clara.
+y en la sección 7 actualizamos los event storming del modelo nuevo.
