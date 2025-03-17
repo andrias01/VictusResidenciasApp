@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/133.0.0.0 Safari/537.36" version="26.0.15" pages="13">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36 Edg/134.0.0.0" version="26.1.0" pages="13">
   <diagram id="8W_eMK7ChT3CeLyrwkVf" name="BigPicture">
     <mxGraphModel grid="1" page="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -1011,7 +1011,7 @@
     </mxGraphModel>
   </diagram>
   <diagram name="Zona de ideas" id="bJZzGvS4MQ2hPK1OFkVY">
-    <mxGraphModel dx="8379" dy="844" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="8714" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1735,13 +1735,13 @@
           <mxGeometry x="580" y="1264" width="342" height="352.54" as="geometry" />
         </mxCell>
         <mxCell id="jy0-WzBvsxHUBTr7_MaU-8" value="identificador&lt;div&gt;agenda&lt;/div&gt;&lt;div&gt;diaSemana&lt;/div&gt;&lt;div&gt;fechaInicio&lt;/div&gt;&lt;div&gt;fechaFin&lt;/div&gt;&lt;div&gt;zonaComun&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="-787.5" y="824.6700000000001" width="95" height="87" as="geometry" />
+          <mxGeometry x="-582.5" y="609.0000000000001" width="95" height="87" as="geometry" />
         </mxCell>
         <mxCell id="0_Evt4IurxOuEiUc32wL-40" value="identificador&lt;div&gt;agenda&lt;/div&gt;&lt;div&gt;tipoRecurrencia (dia,semanal,mensual o anual)&lt;/div&gt;&lt;div&gt;repetirCada (numero respecto a tipoRecurrencia por defecto nuemro 1)&lt;/div&gt;&lt;div&gt;frecuenciaRepeticion&amp;nbsp;&lt;span style=&quot;background-color: initial;&quot;&gt;-&amp;gt;Días de la semana en que se repite (ej. Lunes, Miércoles, Viernes)&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;span style=&quot;background-color: initial;&quot;&gt;fechaFinRepeticion (poner una por defecto )&lt;/span&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
           <mxGeometry x="-710" y="1353.5" width="400" height="111" as="geometry" />
         </mxCell>
         <mxCell id="jy0-WzBvsxHUBTr7_MaU-9" value="identificador&lt;div&gt;zonaComun&lt;br&gt;&lt;/div&gt;&lt;div&gt;fecha&lt;/div&gt;&lt;div&gt;horaInicio&lt;/div&gt;&lt;div&gt;horaFin&lt;/div&gt;&lt;div&gt;estaDisponible&lt;/div&gt;&lt;div&gt;repetir&lt;/div&gt;&lt;div&gt;frecuenciaRepeticion&lt;/div&gt;&lt;div&gt;-&amp;gt;Días de la semana en que se repite (ej. Lunes, Miércoles, Viernes).&lt;/div&gt;&lt;div&gt;fechaInicioRepeticion&lt;/div&gt;&lt;div&gt;fechaFinRepeticion&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;align=left;" parent="1" vertex="1">
-          <mxGeometry x="-690" y="824.6700000000001" width="135" height="211" as="geometry" />
+          <mxGeometry x="-367.5" y="593.5000000000001" width="135" height="211" as="geometry" />
         </mxCell>
         <mxCell id="jy0-WzBvsxHUBTr7_MaU-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0.162;entryY=-0.002;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="0_Evt4IurxOuEiUc32wL-54" target="jy0-WzBvsxHUBTr7_MaU-4" edge="1">
           <mxGeometry relative="1" as="geometry" />

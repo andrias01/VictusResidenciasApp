@@ -33,9 +33,10 @@ import co.edu.uco.victusresidencias.domain.AdministratorDomain;
 import co.edu.uco.victusresidencias.dto.AdministratorDTO;
 import co.edu.uco.victusresidencias.entity.AdministratorEntity;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/v1/administrator")
-@CrossOrigin(origins = {"http://localhost:4200"})
+//@CrossOrigin(origins = {"http://localhost:4200"})
 public final class AdministratorController {
 
 	private final PostgreSqlDAOFactory daoFactory;
@@ -84,47 +85,48 @@ public final class AdministratorController {
         var messages = new ArrayList<String>();
 
         try {
-        	
-        	
-            // Paso 1: Obtener la entidad del país desde la base de datos
+            // Paso 1: Obtener el administrador actual de la base de datos
             AdministratorEntity existingAdministratorEntity = daoFactory.getAdministratorDAO().fingByID(id);
-            
-            
+
             if (existingAdministratorEntity == null) {
                 messages.add("No se encontró un administrador con el ID especificado.");
                 responseWithData.setMessages(messages);
                 return new ResponseEntity<>(responseWithData, HttpStatus.NOT_FOUND);
             }
-            messages.add("El país "+existingAdministratorEntity.getName()+" se actualizó a .");
-            // Asignar el ID al DTO para mantener la coherencia y adaptar a Entity
-            admin.setId(id.toString());
-            AdministratorDomain adminDomain = AdministratorDTOAdapter.getAdministratorDTOAdapter().adaptSource(admin);
-            AdministratorEntity updatedAdminEntity = AdministratorEntityAdapter.getAdministratorEntityAdapter().adaptSource(adminDomain);
 
-            // Actualizar el país en la base de datos
-            daoFactory.getAdministratorDAO().update(updatedAdminEntity);
-            
-            List<AdministratorEntity> adminEntityList = Arrays.asList(updatedAdminEntity);
-            //List<AdministratorEntity> adminEntityList = List.of(updatedAdminEntity);
+            // Paso 2: Fusionar datos nuevos con los existentes
+            if (admin.getName() != "") existingAdministratorEntity.setName(admin.getName());
+            if (admin.getLastName() != "") existingAdministratorEntity.setLastName(admin.getLastName());
+            if (admin.getIdType() != "") existingAdministratorEntity.setIdType(admin.getIdType());
+            if (admin.getIdNumber() != "") existingAdministratorEntity.setIdNumber(admin.getIdNumber());
+            if (admin.getContactNumber() != "") existingAdministratorEntity.setContactNumber(admin.getContactNumber());
+            if (admin.getEmail() != "") existingAdministratorEntity.setEmail(admin.getEmail());
+            if (admin.getPassword() != "") existingAdministratorEntity.setPassword(admin.getPassword());
+
+            // Paso 3: Guardar los cambios en la base de datos
+            daoFactory.getAdministratorDAO().update(existingAdministratorEntity);
+
+            // Paso 4: Convertir la entidad actualizada a DTO para la respuesta
+            List<AdministratorEntity> adminEntityList = List.of(existingAdministratorEntity);
             List<AdministratorDomain> adminDomains = AdministratorEntityAdapter.getAdministratorEntityAdapter().adaptTarget(adminEntityList);
-
-            // Paso 3: Convertir el dominio a DTO y prepararlo para la respuesta
             List<AdministratorDTO> adminsDTOs = AdministratorDTOAdapter.getAdministratorDTOAdapter().adaptTarget(adminDomains);
 
-            // Preparar mensajes de éxito
-            messages.add(updatedAdminEntity.getName()+" de manera satisfactoria.");
+            // Mensaje de éxito
+            messages.add("El administrador " + existingAdministratorEntity.getName() + " se actualizó correctamente.");
             responseWithData.setData(adminsDTOs);
             responseWithData.setMessages(messages);
+
             return new ResponseEntity<>(responseWithData, HttpStatus.OK);
 
         } catch (final Exception exception) {
-            // Manejar excepciones y generar respuesta de error
+            // Manejo de errores
             messages.add("Error al actualizar el administrador. Por favor intente nuevamente.");
             exception.printStackTrace();
             responseWithData.setMessages(messages);
             return new ResponseEntity<>(responseWithData, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<GenericResponse> delete(@PathVariable UUID id) {
@@ -154,7 +156,7 @@ public final class AdministratorController {
         
         try {
         	
-            // Paso 1: Obtener todas las entidades de países desde la base de datos
+            // Paso 1: Obtener todas las entidades de administradores desde la base de datos
             List<AdministratorEntity> adminEntities = daoFactory.getAdministratorDAO().findAll();
     
             // Paso 2: Adaptar las entidades a dominios

@@ -18,7 +18,7 @@ public final class AdministratorDontExistWithTheSameEmailImpl implements Adminis
 	private boolean validateEmailExist(AdministratorDomain data,DAOFactory factory) {
 		var adminEntityFilter = new AdministratorEntity();
 	    adminEntityFilter.setEmail(data.getEmail());
-	    System.out.println(adminEntityFilter);
+	    System.out.println("VALIDANDO Si este dato como filtro existe: "+ data.getEmail());
 	    // Buscar en la base de datos utilizando el filtro
 	    return !factory.getAdministratorDAO().findByFilter(adminEntityFilter).isEmpty();
 	}

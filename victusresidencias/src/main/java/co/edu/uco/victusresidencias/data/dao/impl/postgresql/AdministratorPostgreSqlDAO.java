@@ -32,7 +32,7 @@ final class AdministratorPostgreSQLDAO extends SqlDAO implements AdministratorDA
 	@Override
 	public List<AdministratorEntity> findAll() {
 		AdministratorEntity pruebaAdmin = new AdministratorEntity();
-		System.out.println("el pais nuevo tiene el id " + pruebaAdmin.getId());
+		System.out.println("Este es el id generico== " + pruebaAdmin.getId());
 		return findByFilter(new AdministratorEntity());
 	}
 	
@@ -61,7 +61,7 @@ final class AdministratorPostgreSQLDAO extends SqlDAO implements AdministratorDA
 	        while (result.next()) {
 	            var administratorEntityTmp = new AdministratorEntity();
 	            administratorEntityTmp.setId(UUID.fromString(result.getString("id")));
-	            System.out.println("id que inserta a la lista " + UUID.fromString(result.getString("id")));
+	            System.out.println("ID del admin insertado en LISTA para mostar " + UUID.fromString(result.getString("id")));
 	            administratorEntityTmp.setName(result.getString("name"));
 	            administratorEntityTmp.setLastName(result.getString("last_name"));
 	            administratorEntityTmp.setIdType(result.getString("id_type"));
@@ -96,14 +96,14 @@ final class AdministratorPostgreSQLDAO extends SqlDAO implements AdministratorDA
             final AdministratorEntity filter, 
             final List<Object> parameters) {
 			if (!UUIDHelper.isDefault(filter.getId())) {
-				System.out.println("Sentencia preparada con where " + filter.getId());
+				System.out.println("Sentencia preparada con where para el ID " + filter.getId());
 				statement.append("WHERE id = ? ");
 				parameters.add(filter.getId());
 			} else if (!TextHelper.isEmpty(filter.getName())) {
 				statement.append("WHERE name = ? ");
 				parameters.add(filter.getName());
 			} else if (!TextHelper.isEmpty(filter.getEmail())) {
-				System.out.println("Sentencia preparada con where " + filter.getEmail());
+				System.out.println("Sentencia preparada con where para el EMAIL " + filter.getEmail());
 				statement.append("WHERE email = ? ");
 				parameters.add(filter.getEmail());
 			}
@@ -118,13 +118,14 @@ final class AdministratorPostgreSQLDAO extends SqlDAO implements AdministratorDA
 	    AdministratorEntity filter = new AdministratorEntity();
 	    AdministratorEntity filterEmail = new AdministratorEntity();
 	    filter.setName(data.getName());
-	    filter.setName(data.getEmail());
+	    filterEmail.setEmail(data.getEmail());
 	    if (!findByFilter(filter).isEmpty()) {
 	        throw DataVictusResidenciasException.crear(
 	            "El nombre del administrador ya existe", "No se puede crear un administrador con el nombre duplicado: " + data.getName());
 	    }else if(!findByFilter(filterEmail).isEmpty()) {
 	        throw DataVictusResidenciasException.crear(
-		            "El email del administrador ya existe", "No se puede crear un administrador con el email duplicado: " + data.getEmail());
+		            "El email del administrador ya existe", "No se puede crear un administrador con el email duplicado: " + data.getEmail() );
+	        		
 		}
 	    
 	    final StringBuilder statement = new StringBuilder();
@@ -145,7 +146,7 @@ final class AdministratorPostgreSQLDAO extends SqlDAO implements AdministratorDA
 	        preparedStatement.setString(8, data.getPassword());
 
 	        preparedStatement.executeUpdate();
-	        System.out.println("Se creó el administrador con el nombre " + data.getName() + " exitosamente");
+	        System.out.println("-Se creó el administrador con el nombre " + data.getName() + " exitosamente-");
 
 	    } catch (final SQLException exception) {
 	        var userMessage = "Se ha presentado un problema tratando de llevar a cabo el registro del nuevo administrador.";
