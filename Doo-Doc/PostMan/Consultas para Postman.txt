@@ -1,0 +1,14 @@
+http://localhost:8080/victusresidencias/api/v1/administrator/all   (GET)
+
+http://localhost:8080/victusresidencias/api/v1/administrator/dummy  (GET)
+
+http://localhost:8080/victusresidencias/api/v1/administrator/4c481c51-65ce-46cd-b72e-2cb3e7a1a84d   (este busca por id GET)
+
+http://localhost:8080/victusresidencias/api/v1/administrator/create     (POST)
+
+aquí agregar el json del objeto
+
+http://localhost:8080/victusresidencias/api/v1/administrator/87783eca-9457-4b7b-ba07-62aae41d5f59  (este elimina por id  DELETE)
+
+http://localhost:8080/victusresidencias/api/v1/administrator/dfd8be2b-c9fa-4894-a0f2-a9fa2e8c0185       (este actualiza por id PUT)
+pero recibe un JSON     

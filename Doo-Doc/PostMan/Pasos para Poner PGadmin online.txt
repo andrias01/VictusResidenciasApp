@@ -1,0 +1,32 @@
+Creando Usuario Primero
+Login/Group Roles 
+crear usuarios que accederán al servidor
+
+Luego vamos a Windows Defender ( Firewall )
+*Permitir que una aplicación o una ……..
+	*Permitir otra aplicación
+	    *Examinar (C:\Users\andre\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\pgAdmin 4)
+		*Agregar (chuliamos publico y privado  )
+
+Luego Windows defender seguridad avanzada
+  *Reglas de entrada
+     *Creamos una regla
+        *Programa
+           *Esta ruta de acceso del programa (5432)
+	     *Siguiente todo y poner el nombre de PostgreSQL
+
+Luego siguen las rutas de acceso
+  *En esta dirección buscar (C:\Program Files\PostgreSQL\16\data)
+     *PostgreSQL.conf  (abrir el acceso a la red )
+	*En listen_addresses (es para saber que computadora puede ingresar si todas o algunas)
+     *pg_hba.conf  (para poner que equipos van a entrar)
+	*cuando se pone lo siguiente es decir que cualquier equipo
+	 # TYPE  DATABASE        USER            ADDRESS                 METHOD
+host    all             all             0.0.0.0/0               scram-sha-256
+
+Luego en "equipo" clip derecho administrar
+  *Servicios y aplicaciones 
+    *Servicios 
+      *Buscamos el servicio de postgres
+        *Reiniciamos el servicio
+     127.0.0.1/32
