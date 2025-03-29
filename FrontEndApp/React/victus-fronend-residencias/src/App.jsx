@@ -1,11 +1,13 @@
 import './App.css'
-import Home from './components/Home'
+//import Home from './components/Home'
+import NavBurguer from './components/NavBurguer'
 
 function App() {
   
 
   return (
-    <Home></Home>
+    //<Home></Home>
+    <NavBurguer></NavBurguer>
   )
 }
 
