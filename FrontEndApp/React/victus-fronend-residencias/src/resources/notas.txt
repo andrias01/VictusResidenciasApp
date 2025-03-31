@@ -1,0 +1,2 @@
+para instalar los router 
+npm i react-router-dom

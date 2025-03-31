@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import '../cssComponents/NavBurguer.css'
 import BoxVision from '../resources/pictures/BoxVision.png';
 
@@ -32,22 +33,22 @@ function NavBurguer() {
 
                     <ul className="ul_links">
                         <li className="li_links">
-                            <a href="#" className="link">
+                            <Link to={"/loginAdmin"} className="link">
                                 <i className="icon_admin"></i>
                                 <p>Administrador</p>
-                            </a>
+                            </Link>
                         </li>
                         <li className="li_links">
-                            <a href="#" className="link">
+                            <Link href="#" className="link">
                                 <i className="icon_porteria"></i>
                                 <p>Portería</p>
-                            </a>
+                            </Link>
                         </li>
                         <li className="li_links">
-                            <a href="#" className="link">
+                            <Link href="#" className="link">
                                 <i className="icon_resident"></i>
                                 <p>Residente</p>
-                            </a>
+                            </Link>
                         </li>
                     </ul>
                 </nav>
