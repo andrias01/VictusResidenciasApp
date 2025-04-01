@@ -15,7 +15,7 @@ function NavBurguer() {
 
                     <label className="labe_hamburguesa" htmlFor="menu_hamburguesa">
                         <svg
-                            xmlns="http://www.w3.org/2000/svg"
+                            xmlns="http://www.w3.org/2000/svg"  
                             width="35"
                             height="35"
                             fill="currentColor"
