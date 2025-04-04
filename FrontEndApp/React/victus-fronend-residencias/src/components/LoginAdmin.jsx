@@ -1,5 +1,6 @@
 import Header from "./Header"
 import '../cssComponents/LoginAdmin.css'
+import { Link } from "react-router-dom"
 const LoginAdmin = () => {
     return (
         <>
@@ -13,7 +14,7 @@ const LoginAdmin = () => {
                         <label className="textInput" htmlFor="email">
                             Correo o usuario
                         </label>
-                        <input  id="email" type="text" />
+                        <input id="email" type="text" />
                     </div>
                     <div className="information">
                         <label className="textInput" htmlFor="password">
@@ -22,9 +23,15 @@ const LoginAdmin = () => {
                         <input id="password" type="password" />
                     </div>
                     <div className="linksWithButton">
-                        <a className="linkRegister" href="#">
+                        {/* <a className="linkRegister" href="#">
                             Registrarse
-                        </a>
+                        </a> */}
+                        <Link className="ButtonAccept" to={"/github-pages"}>
+                            Home
+                        </Link>
+                        <Link className="ButtonAccept" to={""}>
+                            iniciarFacil
+                        </Link>
                         <button className="ButtonAccept" type="submit">
                             Aceptar
                         </button>
@@ -32,7 +39,9 @@ const LoginAdmin = () => {
                             ¿Olvidó la contraseña?
                         </a>
                     </div>
+
                 </form>
+
             </div>
         </>
     )

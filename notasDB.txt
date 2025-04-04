@@ -1,0 +1,11 @@
+host
+postgresql://teamvictus:RLR8kFTHUyIwbKO5HymDtLboRe7NnROW@dpg-cvmbeb63jp1c7381j380-a.oregon-postgres.render.com/backendvictusdb
+
+userName
+teamvictus
+
+password
+RLR8kFTHUyIwbKO5HymDtLboRe7NnROW
+
+video para configurar MAVEN
+https://www.youtube.com/watch?v=iC5VnLrFbqs&t=30s
