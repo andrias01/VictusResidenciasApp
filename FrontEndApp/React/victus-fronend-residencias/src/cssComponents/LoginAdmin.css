@@ -23,6 +23,11 @@
 } */
 
 /* Contenedor del formulario */
+.containerFather {
+    text-align: center;
+    margin: 20px auto;
+    
+}
 .container {
     background: var(--color_segundario_suave);
     padding: 20px;
@@ -31,8 +36,7 @@
     width: 350px;
     border: 3px solid var(--color_primario);
     text-align: center;
-    margin: 80px auto;
-    
+    margin: 12px auto;
 }
 
 /* Título "Iniciar Sesión" */
@@ -82,6 +86,7 @@ input {
 .linkRegister:hover, .linkForgetPassword:hover {
     text-decoration: underline;
 }
+
 
 /* Botón "Aceptar" */
 .ButtonAccept {

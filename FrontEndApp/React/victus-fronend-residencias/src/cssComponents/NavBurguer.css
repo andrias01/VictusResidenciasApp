@@ -177,7 +177,6 @@ ul {
     }
 
     .link:hover {
-        /* background-color: var(--color_primario); */
-        background-color: red;
+        background-color: var(--color_primario);
     }
 }
