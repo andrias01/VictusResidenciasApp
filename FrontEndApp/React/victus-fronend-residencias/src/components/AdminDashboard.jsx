@@ -1,18 +1,18 @@
-// import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import "../cssComponents/AdminDashboard.css"; // o usa Tailwind si prefieres
 const buttonData = [
     { label: "Conjuntos", icon: "🏢", path: "/" },
     { label: "Zonas Comunes", icon: "🧱", path: "/" },
     { label: "Agendas", icon: "📆", path: "/" },
-    { label: "Administradores", icon: "👥", path: "/" },
+    { label: "Administradores", icon: "👥", path: "/ManagementAdmin" },
     { label: "Porteros", icon: "🧍", path: "/" },
     { label: "Viviendas", icon: "🏠", path: "/" },
     { label: "Residentes", icon: "👨‍👩‍👧", path: "/" },
     { label: "Asignar Usuarios", icon: "✅", path: "/" },
 ];
 function AdminDashboard() {
-    // const navigate = useNavigate();
+    const Navigate = useNavigate();
     return (
         <>
             <div className="admin-dashboard">
@@ -25,7 +25,7 @@ function AdminDashboard() {
                         <div
                             key={index}
                             className="admin-card"
-                            // onClick={() => navigate(btn.path)}
+                            onClick={() => Navigate(btn.path)}
                         >
                             <div className="admin-icon">{btn.icon}</div>
                             <p>{btn.label}</p>
