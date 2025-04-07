@@ -6,7 +6,7 @@ const LoginAdmin = () => {
         <>
             <Header></Header>
             <div className="containerFather">
-                <Link className="ButtonAccept" to={"/github-pages"}>
+                <Link className="ButtonAccept" to={"/"}>
                     Home
                 </Link>
                 <div className="container">
@@ -31,7 +31,7 @@ const LoginAdmin = () => {
                             Registrarse
                         </a> */}
 
-                            <Link className="ButtonAccept" to={""}>
+                            <Link className="ButtonAccept" to={"/ShowAdmins"}>
                                 iniciarFacil
                             </Link>
                             <button className="ButtonAccept" type="submit">
