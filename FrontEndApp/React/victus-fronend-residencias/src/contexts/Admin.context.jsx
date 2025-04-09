@@ -4,45 +4,125 @@ const AdminContext = createContext();
 
 function AdminProviderWrapper(props) {
     const [admins, setAdmins] = useState([]);
-    // const [error, setError] = useState(false);
+    const [filteredAdmins, setFilteredAdmins] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
+
+    // Obtener todos los administradores
     const getAdmin = async () => {
         try {
-            const response = await fetch("https://backend-victusrenderservidor.onrender.com/victusresidencias/api/v1/administrator/all");
-            //const response = await fetch("https://jsonplaceholder.typicode.com/posts");
-
-            const data = await response.json();
-            setAdmins(data.data);
-            // setError(false);
-            console.log(data);
-        } catch (e) {
-            console.error("Error fetching admin data:", e);
-            // setError(true);
-        }
-    }
+            setLoading(true);
+            const res = await fetch("https://backend-victusrenderservidor.onrender.com/victusresidencias/api/v1/administrator/all");
+            if (!res.ok) throw new Error("No se pudo obtener la lista de administradores");
+      
+            const data = await res.json();
+            setAdmins(data.data || []);
+            setFilteredAdmins(data.data || []);
+            setError(null); // limpia cualquier error anterior
+          } catch (err) {
+            console.error("Error al cargar administradores:", err);
+            setError("No se pudo cargar la lista de administradores. Intenta más tarde.");
+          } finally {
+            setLoading(false);
+          }
+    };
 
     useEffect(() => {
         getAdmin();
     }, []);
 
-    const HTMLAdmins = Array.isArray(admins)
-        ? admins.map((admin) => (
-            <li key={admin.id}>
-                <strong>ID:</strong> {admin.id} <br />
-                <strong>Nombre:</strong> {admin.name}
-            </li>
-        ))
-        : null;
+    // Buscar por nombre
+    const filterAdmins = (name) => {
+        const filtered = admins.filter(admin =>
+            admin.name.toLowerCase().includes(name.toLowerCase())
+        );
+        setFilteredAdmins(filtered);
+    };
+
+    const findAdminsByName = async (name) => {
+        try {
+            const response = await fetch("https://backend-victusrenderservidor.onrender.com/victusresidencias/api/v1/administrator/all");
+            const data = await response.json();
+            const allAdmins = data.data;
+
+            // Filtra por nombre
+            const filtered = allAdmins.filter((admin) =>
+                admin.name.toLowerCase().includes(name.toLowerCase())
+            );
+
+            return filtered;
+        } catch (error) {
+            console.error("Error filtrando administradores:", error);
+            return [];
+        }
+    };
 
 
-    // <li key={admin.id}>
-    //     <h2>{admin.body}</h2>
-    //     {/* <CardAdmin card={admin}></CardAdmin> */}
-    // </li>
+    // Crear nuevo administrador
+    const createAdmin = async (newAdmin) => {
+        try {
+            const response = await fetch("https://backend-victusrenderservidor.onrender.com/victusresidencias/api/v1/administrator/create", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(newAdmin)
+            });
+            if (response.ok) {
+                await getAdmin();
+            }
+        } catch (e) {
+            console.error("Error al crear administrador:", e);
+        }
+    };
 
+    // Eliminar un administrador por ID
+    const deleteAdmin = async (id) => {
+        try {
+            const response = await fetch(`https://backend-victusrenderservidor.onrender.com/victusresidencias/api/v1/administrator/${id}`, {
+                method: "DELETE"
+            });
+            if (response.ok) {
+                await getAdmin();
+            }
+        } catch (e) {
+            console.error("Error al eliminar administrador:", e);
+        }
+    };
+
+    // Modificar un administrador por ID
+    const updateAdmin = async (id, updatedData) => {
+        try {
+            const response = await fetch(`https://backend-victusrenderservidor.onrender.com/victusresidencias/api/v1/administrator/${id}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(updatedData)
+            });
+            if (response.ok) {
+                await getAdmin();
+            }
+        } catch (e) {
+            console.error("Error al actualizar administrador:", e);
+        }
+    };
 
     return (
-        <AdminContext.Provider value={{ admins, setAdmins, getAdmin, HTMLAdmins }}>
+        <AdminContext.Provider value={{
+            admins,
+            filteredAdmins,
+            setAdmins,
+            getAdmin,
+            filterAdmins,
+            createAdmin,
+            deleteAdmin,
+            updateAdmin,
+            findAdminsByName,
+            error,
+            loading,
+        }}>
             {props.children}
         </AdminContext.Provider>
     );

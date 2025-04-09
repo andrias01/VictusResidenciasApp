@@ -1,30 +1,49 @@
-import React, { useState, useEffect } from "react";
-import "../cssComponents/AdminManagement.css"; // o usa Tailwind si prefieres
+import React, { useState, useEffect, useContext } from "react";
+import "../cssComponents/AdminManagement.css"; // O usa Tailwind si prefieres
+import Header from "./Header";
+import { AdminContext } from "../contexts/Admin.context";
+import { Link } from "react-router-dom";
 
-const AdminManagement = () => {
-  const [admins, setAdmins] = useState([]);
+function AdminManagement() {
+  const {
+    admins,
+    getAdmin,
+    createAdmin,
+    updateAdmin,
+    deleteAdmin,
+    findAdminsByName,
+    error,
+    loading,
+  } = useContext(AdminContext);
+
   const [filteredAdmins, setFilteredAdmins] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [form, setForm] = useState({ id: null, name: "", email: "" });
+  const [form, setForm] = useState({
+    id: "",
+    name: "",
+    lastName: "",
+    idType: "",
+    idNumber: "",
+    contactNumber: "",
+    email: "",
+    password: ""
+  });
   const [isEditing, setIsEditing] = useState(false);
 
-  // Mock inicial (simula datos desde una API)
+  // Cargar administradores al inicio
   useEffect(() => {
-    const mockAdmins = [
-      { id: 1, name: "Juan Pérez", email: "juan@residencia.com" },
-      { id: 2, name: "Ana Torres", email: "ana@residencia.com" },
-    ];
-    setAdmins(mockAdmins);
-    setFilteredAdmins(mockAdmins);
+    getAdmin();
   }, []);
 
-  // Filtro en tiempo real
+  // Actualizar lista filtrada cuando admins o el searchTerm cambien
   useEffect(() => {
-    setFilteredAdmins(
-      admins.filter((admin) =>
-        admin.name.toLowerCase().includes(searchTerm.toLowerCase())
-      )
-    );
+    if (searchTerm.trim() === "") {
+      setFilteredAdmins(admins);
+    } else {
+      findAdminsByName(searchTerm).then((results) => {
+        setFilteredAdmins(results);
+      });
+    }
   }, [searchTerm, admins]);
 
   const handleInputChange = (e) => {
@@ -32,98 +51,162 @@ const AdminManagement = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.name || !form.email) return;
 
-    if (isEditing) {
-      // Editar
-      const updated = admins.map((a) =>
-        a.id === form.id ? { ...form } : a
-      );
-      setAdmins(updated);
+    const payload = {
+      name: form.name,
+      lastName: form.lastName,
+      idType: form.idType,
+      idNumber: form.idNumber,
+      contactNumber: form.contactNumber,
+      email: form.email,
+      password: form.password,
+    };
+
+    if (isEditing && form.id) {
+      await updateAdmin(form.id, payload);
     } else {
-      // Crear nuevo
-      const newAdmin = {
-        id: Date.now(),
-        name: form.name,
-        email: form.email,
-      };
-      setAdmins([...admins, newAdmin]);
+      await createAdmin(payload);
     }
 
-    // Reset
-    setForm({ id: null, name: "", email: "" });
+    await getAdmin();
+    setForm({ id: null, name: "", lastName: "", idType: "", idNumber: "", contactNumber: "", email: "", password: "" });
     setIsEditing(false);
   };
 
   const handleEdit = (admin) => {
-    setForm(admin);
+    setForm({
+      id: admin.id || "",
+      name: admin.name || "",
+      lastName: admin.lastName || "",
+      idType: admin.idType || "",
+      idNumber: admin.idNumber || "",
+      contactNumber: admin.contactNumber || "",
+      email: admin.email || "",
+      password: admin.password || ""
+    });
     setIsEditing(true);
   };
 
-  const handleDelete = (id) => {
+  const handleDelete = async (id) => {
     if (window.confirm("¿Seguro que deseas eliminar este administrador?")) {
-      setAdmins(admins.filter((a) => a.id !== id));
+      await deleteAdmin(id);
+      await getAdmin();
     }
   };
 
   return (
-    <div className="admin-management-container">
-      <h2>Gestión de Administradores</h2>
+    <>
+      <Header />
+      <div className="admin-management-container">
+        <Link className="ButtonLogOut" to={"/"}>
+          Cerrar Sesión
+        </Link>
+        <h2>Gestión de Administradores</h2>
 
-      {/* 🔍 Buscador */}
-      <input
-        type="text"
-        placeholder="Buscar por nombre..."
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
-        className="search-input"
-      />
 
-      {/* 📝 Formulario */}
-      <form className="admin-form" onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          placeholder="Nombre"
-          value={form.name}
-          onChange={handleInputChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Correo"
-          value={form.email}
-          onChange={handleInputChange}
-        />
-        <button type="submit">{isEditing ? "Actualizar" : "Crear"}</button>
-      </form>
 
-      {/* 📋 Lista */}
-      <table className="admin-table">
-        <thead>
-          <tr>
-            <th>Nombre</th>
-            <th>Correo</th>
-            <th>Acciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredAdmins.map((admin) => (
-            <tr key={admin.id}>
-              <td>{admin.name}</td>
-              <td>{admin.email}</td>
-              <td>
-                <button onClick={() => handleEdit(admin)}>Editar</button>
-                <button onClick={() => handleDelete(admin.id)}>Eliminar</button>
-              </td>
+        {/* 📝 Formulario */}
+        <form className="admin-form" onSubmit={handleSubmit}>
+          <input
+            type="text"
+            name="name"
+            placeholder="Nombre"
+            value={form.name}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="lastName"
+            name="lastName"
+            placeholder="Apellido"
+            value={form.lastName}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="idType"
+            name="idType"
+            placeholder="Tipo de ID"
+            value={form.idType}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="idNumber"
+            name="idNumber"
+            placeholder="Numero de ID"
+            value={form.idNumber}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="contactNumber"
+            name="contactNumber"
+            placeholder="Numero de contacto"
+            value={form.contactNumber}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Correo"
+            value={form.email}
+            onChange={handleInputChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Contraseña"
+            value={form.password}
+            onChange={handleInputChange}
+            required
+          />
+          <button type="submit">{isEditing ? "Actualizar" : "Crear"}</button>
+
+          {/* 🔍 Buscador */}
+          <input
+            type="text"
+            placeholder="Buscar por nombre..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="search-input"
+          />
+        </form>
+        {loading && <p>Cargando administradores...</p>}
+        {error && <p style={{ color: "red" , margin: 10}}>{error}</p>}
+
+        {/* 📋 Lista */}
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellido</th>
+              <th>Correo</th>
+              <th>Acciones</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+          </thead>
+          <tbody>
+            {filteredAdmins.map((admin) => (
+              <tr key={admin.id}>
+                <td>{admin.name}</td>
+                <td>{admin.lastName}</td>
+                <td>{admin.email}</td>
+                <td>
+                  <button onClick={() => handleEdit(admin)}>Editar</button>
+                  <button onClick={() => handleDelete(admin.id)}>Eliminar</button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
-};
+}
 
 export default AdminManagement;

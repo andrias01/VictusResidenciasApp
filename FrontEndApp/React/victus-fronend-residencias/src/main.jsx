@@ -3,11 +3,11 @@ import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
-import { AdminProviderWrapper } from './contexts/admin.context.jsx'
+import { AdminProviderWrapper } from './contexts/Admin.context.jsx'
 createRoot(document.getElementById('root')).render(
   //<StrictMode>
   <AdminProviderWrapper>
-    <BrowserRouter basename="/github-pages">
+    <BrowserRouter>
       <App />
     </BrowserRouter>
   </AdminProviderWrapper>

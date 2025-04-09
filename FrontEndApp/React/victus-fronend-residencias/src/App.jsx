@@ -9,7 +9,10 @@ function App() {
   
 
   return (
-    
+    //<Home></Home>
+    // <NavBurguer></NavBurguer>
+    // <Header></Header>
+    // <LoginAdmin></LoginAdmin>
     <Pages></Pages>
   )
 }
